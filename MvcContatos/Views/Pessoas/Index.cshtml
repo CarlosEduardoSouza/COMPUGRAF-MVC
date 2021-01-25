@@ -1,0 +1,155 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<MvcContatos.Models.PessoaViewModel>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="alert alert-info">
+    <h2>Listar Registros</h2>
+</div>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("Create")';return false;">Novo Cadastro</button>
+</p>
+
+@if (Model.Count > 0)
+{
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].PessoaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Sobrenome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Nacionalidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].CEP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].CPF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Cidade)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Logradouro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model[0].Telefone)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PessoaId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sobrenome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nacionalidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CEP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CPF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cidade)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Logradouro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                   
+                    @Html.ActionLink("Edit", "Edit",  new { id = item.PessoaId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.PessoaId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PessoaId },
+                   new { onclick = "return confirm('Deseja realmente deletar este contato ?');"})
+
+
+                </td>
+            </tr>
+        }
+
+        <tr>
+            <td>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+
+    </table>
+
+    <div>
+        Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        de @Model.PageCount
+        @if (Model.HasPreviousPage)
+        {
+                        @Html.ActionLink("<", "Index", new { pagina = 1 })
+            @Html.Raw(" ");
+                        @Html.ActionLink("[ Anterior", "Index", new { pagina = Model.PageNumber - 1 })
+        }
+        else
+        {
+            @:<
+            @Html.Raw(" ");
+            @:< Anterior
+        }
+        @if (Model.HasNextPage)
+        {
+            @Html.ActionLink("Próxima ]", "Index", new { pagina = Model.PageNumber + 1 })
+            @Html.Raw(" ");
+            @Html.ActionLink(">", "Index", new { pagina = Model.PageCount })
+        }
+        else
+        {
+            @:Próxima >
+            @Html.Raw(" ")
+            @:>
+        }
+
+    </div>
+
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>Não há Reegistros Cadastrados</h4>
+    </div>
+}
+
+
